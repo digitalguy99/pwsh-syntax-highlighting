@@ -7,6 +7,10 @@ This package provides syntax highlighting for PowerShell.
 It enables highlighting of commands whilst they are typed at a PowerShell prompt into an interactive terminal. 
 This helps in reviewing commands before running them, particularly in catching syntax errors.
 
+## Preview
+
+![preview](https://urlzs.com/fiWmK)
+
 ## How to install
 
 1. Run PowerShell as Administrator.
@@ -29,4 +33,10 @@ This helps in reviewing commands before running them, particularly in catching s
    echo "Import-Module syntax-highlighting" >> $profile
    ```
    
-   so you don't have to import the module every time you open PowerShell
+   so you don't have to import the module every time you open PowerShell.
+   
+ ## Limitations
+ 
+- Command validation will only after pressing the spacebar
+- Second line commands will not be validated 
+- Only works with Windows and doesn't work on macOS/Linux
