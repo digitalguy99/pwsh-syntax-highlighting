@@ -41,7 +41,11 @@ This helps in reviewing commands before running them, particularly in catching s
 - Second line commands will not be validated 
 - Only works with Windows and doesn't work on macOS/Linux
 - Doesn't fully support all oh-my-posh themes
-  
+
+## oh-my-posh support
+
+<details>
+    
 | Theme  | Full Support |
 | ------------- | ------------- |
 | agnoster  | ✅  |
@@ -138,3 +142,22 @@ This helps in reviewing commands before running them, particularly in catching s
 | xtoys  | ✅  |
 | ys  | ✅  |
 | zash  | ✅  |
+    
+</details>
+
+### Solution
+
+For themes that are not fully supported by the `syntax-highlighting` module, follow the instructions
+below to use the workaround script:
+
+1. Clone the git repository onto your machine
+
+    ```pwsh
+    git clone https://github.com/digitalguy99/pwsh-syntax-highlighting.git
+    ```
+    
+2. Run the following command
+    
+   ```pwsh
+   echo "(pwd).Path\pwsh-syntax-highlighting\cmd_validator.ps1" >> $profile
+   ```
