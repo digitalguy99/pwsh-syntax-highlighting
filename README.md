@@ -156,8 +156,10 @@ below to use the workaround script:
     git clone https://github.com/digitalguy99/pwsh-syntax-highlighting.git
     ```
     
-2. Run the following command
+2. Run the following command:
     
    ```pwsh
    echo "(pwd).Path\pwsh-syntax-highlighting\cmd_validator.ps1" >> $profile
    ```
+
+3. Restart PowerShell.
