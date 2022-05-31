@@ -159,7 +159,16 @@ below to use the workaround script:
 2. Run the following command:
     
    ```pwsh
-   echo "(pwd).Path\pwsh-syntax-highlighting\cmd_validator.ps1" >> $profile
+   echo (pwd).Path\pwsh-syntax-highlighting\cmd_validator.ps1 >> $profile
    ```
 
 3. Restart PowerShell.
+
+## Credits
+
+<table>
+  <tr>
+    <td align="center"><a href="github.com/digitalguy99"><img src="https://avatars.githubusercontent.com/u/52367722?s=96&v=4" width="100px;" alt=""/><br /><sub><b>digitalguy99</b></sub></a><br /></td>
+    <td align="center"><a href="https://www.linkedin.com/in/rajeswarkhan/"><img src="https://media-exp1.licdn.com/dms/image/C4D03AQHgpVP7ohT_ZQ/profile-displayphoto-shrink_400_400/0/1516901471017?e=1659571200&v=beta&t=Ksn0EbeQUQcEf4goaH7cfmhrk9qW3yARCtExx0psTVI" width="100px;" alt=""/><br /><sub><b>Rajeswar Khan</b></sub></a><br /></td>
+  </tr>
+</table>
