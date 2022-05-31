@@ -40,3 +40,31 @@ This helps in reviewing commands before running them, particularly in catching s
 - Command validation will only after pressing the spacebar
 - Second line commands will not be validated 
 - Only works with Windows and doesn't work on macOS/Linux
+- Doesn't fully support all oh-my-posh themes
+  
+| Theme  | Full Support |
+| ------------- | ------------- |
+| agnoster  | ✅  |
+| agnosterplus  | ✅  |
+| aliens  | ✅  |
+| amro  | ✅  |
+| atomic  | ✅  |
+| atomicBit  | ✅  |
+| avit  | ✅  |
+| blueish  | ✅  |
+| blue-owl  | ✅  |
+| bubbles  | ✅  |
+| bubblesextra  | ✅  |
+| bubblesline  | ✅  |
+| capr4n  | ❌  |
+| cert  | ✅  |
+| cinnamon  | ✅  |
+| clean-detailed  | ✅  |
+| cloud-native-azure  | ❌  |
+| craver  | ✅  |
+| darkblood  | ✅  |
+| default  | ✅  |
+| di4am0nd  | ❌  |
+| dracula  | ✅  |
+| emodipt  | ✅  |
+| festivetech  | ✅  |
