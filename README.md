@@ -147,27 +147,29 @@ This helps in reviewing commands before running them, particularly in catching s
 
 ### Solution
 
-For themes that are not fully supported by the `syntax-highlighting` module, follow the instructions
+For those who are using themes that are not fully supported by the `syntax-highlighting` module, follow the instructions
 below to use the workaround script:
 
-1. Clone the git repository onto your machine
+1. If you have previously installed the `syntax-highlighting` module, uninstall and remove it from your `$profile`.
+
+2. Clone the git repository onto your machine:
 
     ```pwsh
     git clone https://github.com/digitalguy99/pwsh-syntax-highlighting.git
     ```
     
-2. Run the following command:
+3. Run the following command:
     
    ```pwsh
    echo (pwd).Path\pwsh-syntax-highlighting\cmd_validator.ps1 >> $profile
    ```
 
-3. Restart PowerShell.
+4. Restart PowerShell.
 
 ## Credits
 
 <table>
   <tr>
-    <td align="center"><a href="https://www.linkedin.com/in/rajeswarkhan/"><img src="https://media-exp1.licdn.com/dms/image/C4D03AQHgpVP7ohT_ZQ/profile-displayphoto-shrink_400_400/0/1516901471017?e=1659571200&v=beta&t=Ksn0EbeQUQcEf4goaH7cfmhrk9qW3yARCtExx0psTVI" width="100px;" alt=""/><br /><sub><b>Rajeswar Khan</b></sub></a><br /></td>
+    <td align="center"><a href="https://www.linkedin.com/in/rajeswarkhan/" target="_blank"><img src="https://media-exp1.licdn.com/dms/image/C4D03AQHgpVP7ohT_ZQ/profile-displayphoto-shrink_400_400/0/1516901471017?e=1659571200&v=beta&t=Ksn0EbeQUQcEf4goaH7cfmhrk9qW3yARCtExx0psTVI" width="100px;" alt=""/><br /><sub><b>Rajeswar Khan</b></sub></a><br /></td>
   </tr>
 </table>
