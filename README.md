@@ -165,7 +165,7 @@ below to use the workaround script:
 2. Download the file, which contains the script, onto your machine:
 
     ```pwsh
-    wget https://raw.githubusercontent.com/digitalguy99/pwsh-syntax-highlighting/main/cmd_validator.ps1 -OutFile cmd_validator.ps1
+    Invoke-WebRequest https://raw.githubusercontent.com/digitalguy99/pwsh-syntax-highlighting/main/cmd_validator.ps1 -OutFile cmd_validator.ps1
     ```
     
 3. Run the following command:
