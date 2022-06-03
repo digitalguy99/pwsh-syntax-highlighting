@@ -162,16 +162,16 @@ below to use the workaround script:
    Set-Content -Path $profile -Value (get-content -Path $profile | Select-String -Pattern 'cmd_validator.ps1' -NotMatch)
    ```
    
-2. Clone the git repository onto your machine:
+2. Download the file, which contains the script, onto your machine:
 
     ```pwsh
-    git clone https://github.com/digitalguy99/pwsh-syntax-highlighting.git
+    wget https://raw.githubusercontent.com/digitalguy99/pwsh-syntax-highlighting/main/cmd_validator.ps1 -OutFile cmd_validator.ps1
     ```
     
 3. Run the following command:
     
    ```pwsh
-   echo (pwd).Path\pwsh-syntax-highlighting\cmd_validator.ps1 >> $profile
+   echo (pwd).Path\cmd_validator.ps1 >> $profile
    ```
 
 4. Restart PowerShell.
