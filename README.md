@@ -37,7 +37,7 @@ This helps in reviewing commands before running them, particularly in catching s
    
  ## Limitations
  
-- Command validation will only after pressing the spacebar
+- Command validation will only be executed after pressing the spacebar
 - Second line commands will not be validated 
 - Only works with Windows and doesn't work on macOS/Linux
 - Doesn't fully support all oh-my-posh themes
@@ -150,8 +150,18 @@ This helps in reviewing commands before running them, particularly in catching s
 For those who are using themes that are not fully supported by the `syntax-highlighting` module, follow the instructions
 below to use the workaround script:
 
-1. If you have previously installed the `syntax-highlighting` module, uninstall and remove it from your `$profile`.
+1. If you have previously installed the `syntax-highlighting` module, uninstall it with command:
 
+   ```pwsh
+   Uninstall-Module syntax-highlighting
+   ```
+   
+   and remove it from your $profile with command:
+   
+   ```pwsh
+   Set-Content -Path $profile -Value (get-content -Path $profile | Select-String -Pattern 'cmd_validator.ps1' -NotMatch)
+   ```
+   
 2. Clone the git repository onto your machine:
 
     ```pwsh
