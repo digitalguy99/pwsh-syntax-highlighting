@@ -159,7 +159,7 @@ below to use the workaround script:
    and remove it from your $profile with command:
    
    ```pwsh
-   Set-Content -Path $profile -Value (get-content -Path $profile | Select-String -Pattern 'cmd_validator.ps1' -NotMatch)
+   Set-Content -Path $profile -Value (Get-Content -Path $profile | Select-String -Pattern 'cmd_validator.ps1|Import-Module syntax-highlighting' -NotMatch)
    ```
    
 2. Download the file, which contains the script, onto your machine:
