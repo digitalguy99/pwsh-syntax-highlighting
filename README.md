@@ -180,6 +180,6 @@ below to use the workaround script:
 
 <table>
   <tr>
-    <td align="center"><a href="https://www.linkedin.com/in/rajeswarkhan/" target="_blank"><img src="https://media-exp1.licdn.com/dms/image/C4D03AQHgpVP7ohT_ZQ/profile-displayphoto-shrink_400_400/0/1516901471017?e=1659571200&v=beta&t=Ksn0EbeQUQcEf4goaH7cfmhrk9qW3yARCtExx0psTVI" width="100px;" alt=""/><br /><sub><b>Rajeswar Khan</b></sub></a><br /></td>
+    <td align="center"><a href="https://www.linkedin.com/in/rajeswarkhan/" target="_blank"><img src="https://media-exp1.licdn.com/dms/image/C4D03AQHgpVP7ohT_ZQ/profile-displayphoto-shrink_800_800/0/1516901471017?e=1665619200&v=beta&t=FcscyswT5V0YnGczJPCU-t_TfmylFeFyvhM8eVUKf78" width="100px;" alt=""/><br /><sub><b>Rajeswar Khan</b></sub></a><br /></td>
   </tr>
 </table>
