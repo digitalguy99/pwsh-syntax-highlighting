@@ -1,4 +1,20 @@
-Set-PSReadLineKeyHandler -Key " " `
+Write-Verbose "`n->> Loading the module"
+
+$SyntaxHighlightCacheVariable="SyntaxHighlightCache"
+$CommandsCache=[System.Environment]::GetEnvironmentVariable($SyntaxHighlightCacheVariable, "User")
+if(!$CommandsCache) {
+    Reset-SyntaxHighlightingCache
+} else {
+    Write-Verbose "`n->> SyntaxHighlightCacheVariable already set"
+}
+
+function Reset-SyntaxHighlightingCache() {
+    Write-Verbose "`n->> Feeding the commands cache"
+    $CurrentCommands=(Get-Command * | Select-Object Name).Name
+    [System.Environment]::SetEnvironmentVariable($SyntaxHighlightCacheVariable, $CurrentCommands, "User")
+}
+
+Set-PSReadLineKeyHandler -Chord Spacebar `
     -BriefDescription ValidatePrograms `
     -LongDescription "Validate typed program's existance in path variable" `
     -ScriptBlock {
@@ -38,7 +54,7 @@ Set-PSReadLineKeyHandler -Key " " `
             return
         }
         $color = "Red"
-        if ((Get-Command $token -ErrorAction SilentlyContinue) -or (Get-Command "$token.exe" -ErrorAction SilentlyContinue)) {
+        if ( [System.Environment]::GetEnvironmentVariable($SyntaxHighlightCacheVariable, "User").Split(" ") -match "^$token(.exe|.bat|.ps1|)$" ) {
             $color = "Green"
         }    
         for ($xPosition = 0; $xPosition -lt $tokenLength; $xPosition++) {
