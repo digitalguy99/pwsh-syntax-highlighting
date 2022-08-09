@@ -104,7 +104,7 @@ PrivateData = @{
         ProjectUri = 'https://github.com/digitalguy99/pwsh-syntax-highlighting'
 
         # A URL to an icon representing this module.
-        # IconUri = ''
+        IconUri = 'https://evgeniypeshkov.gallerycdn.vsassets.io/extensions/evgeniypeshkov/syntax-highlighter/0.5.0/1603295122989/Microsoft.VisualStudio.Services.Icons.Default'
 
         # ReleaseNotes of this module
         # ReleaseNotes = ''
