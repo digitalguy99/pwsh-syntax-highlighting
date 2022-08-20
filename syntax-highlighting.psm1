@@ -1,17 +1,17 @@
 Write-Verbose "`n->> Loading the module"
 
+function Reset-SyntaxHighlightingCache() {
+    Write-Verbose "`n->> Feeding the commands cache"
+    $CurrentCommands=(Get-Command * | Select-Object Name).Name
+    [System.Environment]::SetEnvironmentVariable($SyntaxHighlightCacheVariable, $CurrentCommands, "User")
+}
+
 $SyntaxHighlightCacheVariable="SyntaxHighlightCache"
 $CommandsCache=[System.Environment]::GetEnvironmentVariable($SyntaxHighlightCacheVariable, "User")
 if(!$CommandsCache) {
     Reset-SyntaxHighlightingCache
 } else {
     Write-Verbose "`n->> SyntaxHighlightCacheVariable already set"
-}
-
-function Reset-SyntaxHighlightingCache() {
-    Write-Verbose "`n->> Feeding the commands cache"
-    $CurrentCommands=(Get-Command * | Select-Object Name).Name
-    [System.Environment]::SetEnvironmentVariable($SyntaxHighlightCacheVariable, $CurrentCommands, "User")
 }
 
 Set-PSReadLineKeyHandler -Chord Spacebar `
