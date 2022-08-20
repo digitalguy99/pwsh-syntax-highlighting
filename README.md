@@ -116,7 +116,7 @@ This helps in reviewing commands before running them, particularly in catching s
 | powerlevel10k_rainbow  | ✅  |
 | powerline  | ❌  |
 | probua.minimal  | ❌  |
-| pure  | ✅  |
+| pure  | ❌  |
 | remk  | ✅  |
 | robbyrussel  | ✅  |
 | rudolfs-dark  | ❌  |
