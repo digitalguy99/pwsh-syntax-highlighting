@@ -21,7 +21,9 @@ $printableChars + "Tab" | ForEach-Object {
         $ast = $null; $tokens = $null ; $errors = $null; $cursor = $null
         [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)  
         $token = $tokens[0]
-        if ([string]::IsNullOrEmpty($token.Text.Trim())) {
+	  
+
+        if ([string]::IsNullOrEmpty($token.Text.Trim()) -or $token.Text -match "\[|\]") {
             return
         }  
 
@@ -33,10 +35,9 @@ $printableChars + "Tab" | ForEach-Object {
         $tokenLength = ($token.Extent.EndOffset - $token.Extent.StartOffset)
  
         $color = "Red"
-        if ((Get-Command $token -ErrorAction SilentlyContinue)) {
-            $color = "Green"
+	 if(Get-Command $token.Text -ErrorAction Ignore){
+           $color = "Green" 
         } 
-
         $sX = $cursorPosX
         $Y = $cursorPosY
         $eX = ($cursorPosX + $tokenLength)
