@@ -171,7 +171,7 @@ below to use the workaround script:
 3. Run the following command:
     
    ```pwsh
-   echo (pwd).Path\cmd_validator.ps1 >> $profile
+   (pwd).Path+"\cmd_validator.ps1" >> $profile
    ```
 
 4. Restart PowerShell.
