@@ -21,13 +21,7 @@ This helps in reviewing commands before running them, particularly in catching s
     Install-Module syntax-highlighting
     ```
  
-3. Restart PowerShell and run:
-
-   ```pwsh
-   Import-Module syntax-highlighting
-   ```
-   
-   or simply:
+3. Run the following and restart PowerShell:
    
    ```pwsh
    echo "Import-Module syntax-highlighting" >> $profile
@@ -37,144 +31,9 @@ This helps in reviewing commands before running them, particularly in catching s
    
  ## Limitations
  
-- Command validation will only be executed after pressing the spacebar
-- Second line commands will not be validated 
+- Commands after a colon and second line commands will not be validated 
 - Only works with Windows and doesn't work on macOS/Linux
-- Doesn't fully support all oh-my-posh themes
-
-## oh-my-posh support
-
-<details>
-    
-| Theme  | Full Support |
-| ------------- | ------------- |
-| agnoster  | ✅  |
-| agnosterplus  | ✅  |
-| aliens  | ✅  |
-| amro  | ✅  |
-| atomic  | ✅  |
-| atomicBit  | ✅  |
-| avit  | ✅  |
-| blueish  | ✅  |
-| blue-owl  | ✅  |
-| bubbles  | ✅  |
-| bubblesextra  | ✅  |
-| bubblesline  | ✅  |
-| capr4n  | ❌  |
-| cert  | ✅  |
-| cinnamon  | ✅  |
-| clean-detailed  | ✅  |
-| cloud-native-azure  | ❌  |
-| craver  | ✅  |
-| darkblood  | ✅  |
-| default  | ✅  |
-| di4am0nd  | ❌  |
-| dracula  | ✅  |
-| emodipt  | ✅  |
-| festivetech  | ✅  |
-| fish  | ❌  |
-| free-ukraine  | ❌  |
-| gmay  | ✅  |
-| grandpa-style  | ✅  |
-| half-life  | ✅  |
-| honukai  | ✅  |
-| hotstick.minimal  | ✅  |
-| hunk  | ✅  |
-| huvix  | ✅  |
-| if_tea  | ❌  |
-| iterm2  | ✅  |
-| jandedobbeleer  | ✅  |
-| jblab_2021  | ✅  |
-| jonnychipz  | ✅  |
-| jtracey93  | ✅  |
-| jv_sitecorian  | ✅  |
-| kali  | ❌  |
-| lambda  | ✅  |
-| lambdageneration  | ✅  |
-| larserikfinholt  | ✅  |
-| M365Princess  | ✅  |
-| marcduiker  | ✅  |
-| markbull  | ✅  |
-| material  | ✅  |
-| microverse-power  | ✅  |
-| mojada  | ✅  |
-| montys  | ❌  |
-| mt  | ✅  |
-| negligible  | ✅  |
-| night-owl  | ✅  |
-| nordtron  | ❌  |
-| nu4a  | ❌  |
-| paradox  | ✅  |
-| pararussel  | ✅  |
-| patriksvensson  | ✅  |
-| peru  | ❌  |
-| pixelrobots  | ✅  |
-| plague  | ✅  |
-| powerlevel10k_classic  | ✅  |
-| powerlevel10k_lean  | ✅  |
-| powerlevel10k_modern  | ✅  |
-| powerlevel10k_rainbow  | ✅  |
-| powerline  | ❌  |
-| probua.minimal  | ❌  |
-| pure  | ❌  |
-| remk  | ✅  |
-| robbyrussel  | ✅  |
-| rudolfs-dark  | ❌  |
-| rudolfs-light  | ❌  |
-| slim  | ✅  |
-| slimfat  | ❌  |
-| smoothie  | ✅  |
-| sonicboom_dark  | ✅  |
-| sonicboom_light  | ✅  |
-| sorin  | ✅  |
-| space  | ✅  |
-| spaceship  | ✅  |
-| star  | ✅  |
-| stelbent.minimal  | ✅  |
-| takuya  | ❌  |
-| thecyberden  | ❌  |
-| the-unnamed  | ❌  |
-| tiwahu  | ❌  |
-| tonybaloney  | ✅  |
-| unicorn  | ✅  |
-| velvet  | ❌  |
-| wopian  | ✅  |
-| xtoys  | ✅  |
-| ys  | ✅  |
-| zash  | ✅  |
-    
-</details>
-
-### Solution
-
-For those who are using themes that are not fully supported by the `syntax-highlighting` module, follow the instructions
-below to use the workaround script:
-
-1. If you have previously installed the `syntax-highlighting` module, uninstall it with command:
-
-   ```pwsh
-   Uninstall-Module syntax-highlighting
-   ```
-   
-   and remove it from your $profile with command:
-   
-   ```pwsh
-   Set-Content -Path $profile -Value (Get-Content -Path $profile | Select-String -Pattern 'cmd_validator.ps1|Import-Module syntax-highlighting' -NotMatch)
-   ```
-   
-2. Download the file, which contains the script, onto your machine:
-
-    ```pwsh
-    Invoke-WebRequest https://raw.githubusercontent.com/digitalguy99/pwsh-syntax-highlighting/main/cmd_validator.ps1 -OutFile cmd_validator.ps1
-    ```
-    
-3. Run the following command:
-    
-   ```pwsh
-   (pwd).Path+"\cmd_validator.ps1" >> $profile
-   ```
-
-4. Restart PowerShell.
+- Doesn't validate commands that begin with a "#" well
 
 ## Credits
 
