@@ -1,0 +1,14 @@
+name: Publish
+on: [push]
+
+jobs:
+    build:
+      runs-on: windows-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: publish module
+          run: |
+            mkdir syntax-highlighting
+            cp syntax-highlighting*,README.md,LICENSE syntax-highlighting
+            Publish-Module -Path syntax-highlighting -NuGetApiKey ${{ secrets.APIKEY }}
+          shell: pwsh

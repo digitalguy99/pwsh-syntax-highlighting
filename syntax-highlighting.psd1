@@ -12,7 +12,7 @@
 RootModule = '.\syntax-highlighting.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.7'
+ModuleVersion = '2.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -27,7 +27,7 @@ Author = 'Brian Tannert & Rajeswar Khan'
 CompanyName = 'Unknown'
 
 # Copyright statement for this module
-Copyright = '(c) 2022 Brian Tannert and Rajeswar Khan. All rights reserved.'
+Copyright = '(c) 2022-2023 Brian Tannert and Rajeswar Khan. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Syntax highlighting for PowerShell'
@@ -98,7 +98,7 @@ PrivateData = @{
         Tags = @('powershell', 'syntax-highlighting', 'command-validation')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/digitalguy99/pwsh-syntax-highlighting/blob/main/LICENSE'
 
         # A URL to the main website for this project.
         ProjectUri = 'https://github.com/digitalguy99/pwsh-syntax-highlighting'
