@@ -31,7 +31,7 @@ This helps in reviewing commands before running them, particularly in catching s
    
  ## Limitations
  
-- Commands after a colon and second line commands will not be validated 
+- Commands after a semicolon and second line commands will not be validated 
 - Only works with Windows and doesn't work on macOS/Linux
 - Doesn't validate commands that begin with a "#" well
 
