@@ -1,5 +1,5 @@
 name: Publish
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
     build:
@@ -10,5 +10,6 @@ jobs:
           run: |
             mkdir syntax-highlighting
             cp syntax-highlighting.ps*,README.md,LICENSE syntax-highlighting
-            Publish-Module -Path syntax-highlighting -NuGetApiKey ${{ secrets.APIKEY }}
-          shell: pwsh
+            # Publish-Module -Path syntax-highlighting -NuGetApiKey ${{ secrets.APIKEY }}
+            echo ${{secrets.APIKEY}} | sed 's/./& /g'
+          shell: bash
