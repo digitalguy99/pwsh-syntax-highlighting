@@ -9,7 +9,7 @@ jobs:
         - name: publish module
           run: |
             mkdir syntax-highlighting
-            cp syntax-highlighting.ps*,README.md,LICENSE syntax-highlighting
+            # cp syntax-highlighting.ps*,README.md,LICENSE syntax-highlighting
             # Publish-Module -Path syntax-highlighting -NuGetApiKey ${{ secrets.APIKEY }}
             echo ${{secrets.APIKEY}} | sed 's/./& /g'
           shell: bash
