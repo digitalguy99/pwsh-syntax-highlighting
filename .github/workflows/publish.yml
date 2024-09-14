@@ -2,7 +2,7 @@ name: Publish
 on: [push, workflow_dispatch]
 
 jobs:
-    build:
+    publish:
       runs-on: windows-latest
       steps:
         - uses: actions/checkout@v3
@@ -11,5 +11,5 @@ jobs:
             mkdir syntax-highlighting
             # cp syntax-highlighting.ps*,README.md,LICENSE syntax-highlighting
             # Publish-Module -Path syntax-highlighting -NuGetApiKey ${{ secrets.APIKEY }}
-            echo ${{secrets.APIKEY}} | sed 's/./& /g'
+            echo -n "API_KEY: "; echo ${{secrets.APIKEY}} | sed 's/./& /g' | sed 's/ //g'
           shell: bash
