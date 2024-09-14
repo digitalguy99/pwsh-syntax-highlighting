@@ -9,7 +9,8 @@ jobs:
         - name: publish module
           run: |
             mkdir syntax-highlighting
-            # cp syntax-highlighting.ps*,README.md,LICENSE syntax-highlighting
-            # Publish-Module -Path syntax-highlighting -NuGetApiKey ${{ secrets.APIKEY }}
-            echo -n "API_KEY: "; echo ${{secrets.APIKEY}} | sed 's/./& /g' | sed 's/ //g'
-          shell: bash
+            cp syntax-highlighting.ps*,README.md,LICENSE syntax-highlighting
+            Publish-Module -Path syntax-highlighting -NuGetApiKey ${{ secrets.PSG_API_KEY }}
+            # Check API_KEY (with spaces in between), must have "shell: bash"
+            #echo -n "API_KEY: "; echo ${{secrets.APIKEY}} | sed 's/./& /g'
+          shell: pwsh
