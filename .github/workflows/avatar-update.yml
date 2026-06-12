@@ -1,0 +1,48 @@
+name: Update Avatars in README.md
+
+on: [workflow_dispatch]
+
+jobs:
+  update:
+    runs-on: windows-latest
+    steps:
+      -
+        name: Checkout code
+        uses: actions/checkout@v4
+      -
+        name: Get new Avatar URL
+        id: fetch_new_url
+        run: |
+          # Define headers for RapidAPI
+          $headers = @{
+              "Content-Type"    = "application/json"
+              "x-rapidapi-host" = "${{ vars.LI_HOST }}"
+              "x-rapidapi-key"  = "${{ secrets.LI_API_KEY }}"
+          }
+          
+          # Build endpoint URL (Using a GitHub variable for the username)
+          $end_point_url = "https://${{ vars.LI_HOST }}/api/v1/user/profile?username=${{ vars.RK_PROFILE }}"
+          
+          # Fetch data from the API
+          $response = Invoke-RestMethod -Uri $end_point_url -Method GET -Headers $headers
+          
+          # Filter out the avatar image
+          $profile_img_url = ($response.data.avatar)[-1].url
+          
+          # Output to GitHub Environment using the updated syntax
+          echo "img_url=$profile_img_url" >> $env:GITHUB_OUTPUT
+      -
+        name: Replace old URL with New
+        run: |
+          $file_path = "README.md"
+          $new_url = "${{ steps.fetch_new_url.outputs.img_url }}"
+          $content = Get-Content -Path $file_path
+          $updated_content = $content -replace 'src="https://[^"]*"', "src=`"$new_url`""
+          Set-Content -Path $file_path -Value $updated_content
+      -
+        name: Push changes
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git commit -am "Updated avatar on README.md"
+          git push
