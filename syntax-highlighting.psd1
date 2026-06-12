@@ -12,7 +12,7 @@
 RootModule = '.\syntax-highlighting.psm1'
 
 # Version number of this module.
-ModuleVersion = '2.0.3'
+ModuleVersion = '3.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -27,7 +27,7 @@ Author = 'Brian Tannert & Rajeswar Khan'
 CompanyName = 'Unknown'
 
 # Copyright statement for this module
-Copyright = '(c) 2022-2023 Brian Tannert and Rajeswar Khan. All rights reserved.'
+Copyright = '(c) 2022-2026 Brian Tannert and Rajeswar Khan. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Syntax highlighting for PowerShell'
@@ -129,4 +129,3 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
-

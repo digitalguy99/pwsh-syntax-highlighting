@@ -1,5 +1,13 @@
 name: Publish
-on: [push, workflow_dispatch]
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'syntax-highlighting.psm1'
+  workflow_dispatch:
+    
 
 jobs:
     publish:
