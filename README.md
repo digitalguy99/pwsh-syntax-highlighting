@@ -29,6 +29,17 @@ https://github.com/user-attachments/assets/83cc42aa-e234-44b8-b0a3-251138afe71d
    
    so you don't have to import the module every time you open PowerShell.
 
+## Troubleshooting
+
+1. If you are bothered with the validation lag you can increase the throttle(default: 50) by running
+```pwsh
+syntax-highlighting {Throttle(in ms)}
+```
+eg.
+```pwsh
+syntax-highlighting 100
+```
+
 ## How to update
 
 ```pwsh

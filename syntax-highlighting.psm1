@@ -1,3 +1,4 @@
+$script:ThrottleLimit = 50
 $global:lastRender = Get-Date
 $printableChars = [char[]] (0x20..0x7e + 0xa0..0xff)
 
@@ -20,6 +21,11 @@ $allKeys | ForEach-Object {
                 [Microsoft.PowerShell.PSConsoleReadLine]::DeleteChar($key)
             } else {
                 [Microsoft.PowerShell.PSConsoleReadLine]::Insert($key.KeyChar)
+            }
+
+            # 
+            if (((get-date) - $global:lastRender).TotalMilliseconds -le $script:ThrottleLimit) {
+                return
             }
 
             # 2. Read live text string out of the prompt window buffer
@@ -111,3 +117,18 @@ $allKeys | ForEach-Object {
             $global:lastRender = Get-Date
         }
 }
+
+function Set-SyntaxHighlightingThrottle {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [int]$Milliseconds
+    )
+    
+    # Update the module-scoped tracking variable
+    $script:ThrottleLimit = $Milliseconds
+    Write-Verbose "Syntax-highlighting throttle updated to ${Milliseconds}ms."
+}
+
+# Create a clean user-facing alias matching your desired command format
+Set-Alias -Name syntax-highlighting -Value Set-SyntaxHighlightingThrottle
