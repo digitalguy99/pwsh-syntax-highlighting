@@ -1,134 +1,73 @@
-$script:ThrottleLimit = 50
 $global:lastRender = Get-Date
+# Cache variable to remember the last color used (prevents re-render flashing)
+$global:lastAppliedColor = "Yellow" 
 $printableChars = [char[]] (0x20..0x7e + 0xa0..0xff)
 
-# Combine normal keys with backspace/delete to trigger color resets
-$allKeys = $printableChars + "Tab" + "Backspace" + "Delete"
+# 1. Clear previous handlers to prevent conflicts
+$printableChars + "Tab" | ForEach-Object {
+    Remove-PSReadLineKeyHandler -Key $_ -ErrorAction Ignore
+}
 
-$allKeys | ForEach-Object {
+# 2. Set Default Color to Yellow (Neutral/Waiting state)
+Set-PSReadLineOption -Colors @{ "Command" = "$([char]0x1b)[93m" }
+
+$printableChars + "Tab" | ForEach-Object {
     Set-PSReadLineKeyHandler -Key $_ `
         -BriefDescription ValidatePrograms `
-        -LongDescription "Validate typed program's existence in path variable" `
+        -LongDescription "Green if perfect, Yellow otherwise without screen flashing" `
         -ScriptBlock {
             param($key, $arg)
 
-            # 1. Force execution of native typing/deleting actions immediately
-            if ($key.Key -eq [System.ConsoleKey]::Tab) {
-                [Microsoft.PowerShell.PSConsoleReadLine]::TabCompleteNext($key)
-            } elseif ($key.Key -eq [System.ConsoleKey]::Backspace) {
-                [Microsoft.PowerShell.PSConsoleReadLine]::BackwardDeleteChar($key)
-            } elseif ($key.Key -eq [System.ConsoleKey]::Delete) {
-                [Microsoft.PowerShell.PSConsoleReadLine]::DeleteChar($key)
-            } else {
+            # Insert key or handle Tab completion
+            if ($key.Key -ne [System.ConsoleKey]::Tab) {
                 [Microsoft.PowerShell.PSConsoleReadLine]::Insert($key.KeyChar)
             }
-
-            # 
-            if (((get-date) - $global:lastRender).TotalMilliseconds -le $script:ThrottleLimit) {
-                return
+            else {
+                [Microsoft.PowerShell.PSConsoleReadLine]::TabCompleteNext($key)
             }
 
-            # 2. Read live text string out of the prompt window buffer
-            $lineString = $null; $cursor = $null
-            [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$lineString, [ref]$cursor)
+            # 50ms Throttle
+            # if (((Get-Date) - $global:lastRender).TotalMilliseconds -le 50) {
+            #     return
+            # }
 
-            if ([string]::IsNullOrWhiteSpace($lineString)) {
-                return
-            }
+            # Analyze the buffer
+            $ast = $null; $tokens = $null; $errors = $null; $cursor = $null
+            [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
 
-            # Calculate accurate leading space padding metrics
-            $trimmedLine = $lineString.TrimStart()
-            $leadingSpacesCount = $lineString.Length - $trimmedLine.Length
-            
-            # FIX: Regex matching guarantees it extracts the true full word safely, even without spaces
-            if ($trimmedLine -match '^([^\s()\[\]{}|;]+)') {
-                $tokenText = $Matches[1]
-            } else {
-                return
-            }
+            if ($tokens.Count -gt 0) {
+                $allCommandsValid = $true
+                $hasCommand = $false
 
-            # Skip checking symbols, comments, exit, and variables
-            if ([string]::IsNullOrEmpty($tokenText) -or 
-                $tokenText -like '$*' -or 
-                $tokenText -like '#*' -or
-                $tokenText -eq "function" -or 
-                $tokenText -eq "exit") {
-                return
-            }
-
-            # 3. Locate precise prompt coordinates on screen
-            [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition(0)
-            $cursorPosX = $host.UI.RawUI.CursorPosition.X
-            $cursorPosY = $host.UI.RawUI.CursorPosition.Y
-            [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition($cursor)
-
-            $tokenLength = $tokenText.Length
-
-            # 4. Check system PATH for command presence
-            $color = "Red"
-            if (Get-Command $tokenText -ErrorAction Ignore) {
-                $color = "Green"
-            }
-
-            # Handle cleanup state if a command was completely deleted
-            if ($tokenLength -le 1 -and ($key.Key -eq [System.ConsoleKey]::Backspace -or $key.Key -eq [System.ConsoleKey]::Delete)) {
-                $color = "White"
-            }
-
-            # Map the boundary vectors safely
-            $sX = $cursorPosX + $leadingSpacesCount
-            $Y = $cursorPosY
-            $eX = ($sX + $tokenLength)
-            
-            $nextLine = $false
-            $painted = 0
-            $bufSize = $host.UI.RawUI.BufferSize.Width
-
-            # 5. Core rendering engine loop
-            while ($painted -ne $tokenLength) {
-                $scanXEnd = $eX
-                if ($eX -gt $bufSize) {
-                    $scanXEnd = $bufSize
-                    $eX = $eX - $bufSize
-                    $nextLine = $true
-                }
-
-                $finalRec = New-Object System.Management.Automation.Host.Rectangle($sX, $Y, $scanXEnd, $Y)
-                $finalBuf = $host.UI.RawUI.GetBufferContents($finalRec)
-
-                for ($xPosition = 0; $xPosition -lt ($scanXEnd - $sX); $xPosition++) {
-                    $bufferItem = $finalBuf.GetValue(0, $xPosition)
-                    if ($bufferItem) {
-                        $bufferItem.ForegroundColor = $color
-                        $finalBuf.SetValue($bufferItem, 0, $xPosition)
+                foreach ($token in $tokens) {
+                    if ($token.TokenServiceKind -eq 'Command' -or $token.Kind -eq 'Identifier') {
+                        $cmdText = $token.Text.Trim()
+                        # Ignore brackets/syntax chars
+                        # if ($cmdText -match '\[|\]|\(|\)|\{|\}') { continue }
+                        
+                        $hasCommand = $true
+                        if (-not (Get-Command $cmdText -ErrorAction Ignore)) {
+                            $allCommandsValid = $false
+                            break 
+                        }
                     }
-                    $painted++
                 }
 
-                $coords = New-Object System.Management.Automation.Host.Coordinates $sX, $Y
-                $host.ui.RawUI.SetBufferContents($coords, $finalBuf)
-
-                if ($nextLine) {
-                    $sX = 0
-                    $Y++
-                    $nextLine = $false
+                # STATE CACHE FILTER: Only update the engine if the color actually needs to change
+                if ($hasCommand -and $allCommandsValid) {
+                    if ($global:lastAppliedColor -ne "Green") {
+                        Set-PSReadLineOption -Colors @{ "Command" = "$([char]0x1b)[32m" }
+                        $global:lastAppliedColor = "Green"
+                    }
+                }
+                else {
+                    if ($global:lastAppliedColor -ne "Yellow") {
+                        Set-PSReadLineOption -Colors @{ "Command" = "$([char]0x1b)[93m" }
+                        $global:lastAppliedColor = "Yellow"
+                    }
                 }
             }
+
             $global:lastRender = Get-Date
         }
 }
-
-function Set-SyntaxHighlightingThrottle {
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory = $true, Position = 0)]
-        [int]$Milliseconds
-    )
-    
-    # Update the module-scoped tracking variable
-    $script:ThrottleLimit = $Milliseconds
-    Write-Verbose "Syntax-highlighting throttle updated to ${Milliseconds}ms."
-}
-
-# Create a clean user-facing alias matching your desired command format
-Set-Alias -Name syntax-highlighting -Value Set-SyntaxHighlightingThrottle
