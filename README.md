@@ -9,7 +9,7 @@ This helps in reviewing commands before running them, particularly in catching s
 
 ## Preview
 
-https://github.com/user-attachments/assets/83cc42aa-e234-44b8-b0a3-251138afe71d
+<img width="1136" height="184" alt="sh_macOS_final" src="https://github.com/user-attachments/assets/316f02cb-8a24-445e-894b-10d8366f9210" />
 
 ## How to install
 
