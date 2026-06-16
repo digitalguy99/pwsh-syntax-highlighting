@@ -3,7 +3,7 @@ This project is inspired by the [zsh-syntax-highlighting](https://github.com/zsh
 
 *Requirement: pwsh 5.1+*
 
-This package provides syntax highlighting for PowerShell. 
+This package provides syntax highlighting for PowerShell(especially on Mac/Linux). 
 It enables highlighting of commands whilst they are typed at a PowerShell prompt into an interactive terminal. 
 This helps in reviewing commands before running them, particularly in catching syntax errors.
 
@@ -13,43 +13,31 @@ https://github.com/user-attachments/assets/83cc42aa-e234-44b8-b0a3-251138afe71d
 
 ## How to install
 
-1. Run PowerShell as Administrator.
+Execute the following command:
 
-2. Execute the following command:
-
-    ```pwsh
-    Install-Module syntax-highlighting
-    ```
- 
-3. Run the following and restart PowerShell:
-   
-   ```pwsh
-   echo "Import-Module syntax-highlighting" >> $profile
-   ```
-   
-   so you don't have to import the module every time you open PowerShell.
-
-## Troubleshooting
-
-1. If you are bothered with the validation lag you can increase the throttle(default: 50) by running
 ```pwsh
-syntax-highlighting {Throttle(in ms)}
+($content = irm 'https://raw.githubusercontent.com/digitalguy99/pwsh-syntax-highlighting/refs/heads/feature/xplat-compatible/syntax-highlighting.psm1') | Out-File ($path = "$HOME/syntax-highlighting.ps1"); iex $content; Add-Content $profile ". '$path'"
 ```
-eg.
+ 
+## Uninstall
+
+Run the following:
 ```pwsh
-syntax-highlighting 100
+($f = 'syntax-highlighting'); (gc $profile) | ? { $_ -notmatch $f } | sc $profile; rm -r -fo "$HOME/$f.ps1"
 ```
 
 ## How to update
 
+Run the following:
 ```pwsh
-Update-Module syntax-highlighting
+($content = irm 'https://raw.githubusercontent.com/digitalguy99/pwsh-syntax-highlighting/refs/heads/feature/xplat-compatible/syntax-highlighting.psm1') | Out-File ($path = "$HOME/syntax-highlighting.ps1"); iex $content
 ```
 
- ## Limitations
+## Limitations
  
-- Commands after a semicolon and second line commands will not be validated 
-- Only works with Windows and doesn't work on macOS/Linux
+- Commands will only validate(change in color) after the <kbd>space</kbd>/<kbd>return</kbd> key is entered
+- Commands will not be colored red when they are not valid, they will simply remain the default color set by `PSReadLine`
+- When more than 1 command is entered, only when both commands are valid will they both be colored green
 
 ## Credits
 
