@@ -49,7 +49,7 @@ Update-Module syntax-highlighting
  ## Limitations
  
 - Commands after a semicolon and second line commands will not be validated 
-- Only works with Windows and doesn't work on macOS/Linux
+- If you are using macOS/Linux, check [this](https://github.com/digitalguy99/pwsh-syntax-highlighting/tree/feature/xplat-compatible) out
 
 ## Credits
 

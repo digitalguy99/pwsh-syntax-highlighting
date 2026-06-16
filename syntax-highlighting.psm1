@@ -51,8 +51,13 @@ $allKeys | ForEach-Object {
             if ([string]::IsNullOrEmpty($tokenText) -or 
                 $tokenText -like '$*' -or 
                 $tokenText -like '#*' -or
-                $tokenText -eq "function" -or 
-                $tokenText -eq "exit") {
+                $tokenText -in (
+                    'function', 'exit', 'filter', 'workflow', 'class', 'enum', 
+                    'if', 'elseif', 'switch', 'foreach', 'from', 'for', 'while', 
+                    'do', 'try', 'trap', 'throw', 'return', 'break', 'continue', 
+                    'data', 'parallel', 'sequence', 'define'
+                )
+            ) {
                 return
             }
 
