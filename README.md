@@ -23,7 +23,7 @@ Execute the following command:
 
 1. Run the following:
    ```pwsh
-   ($f = 'syntax-highlighting'); (gc $profile) | ? { $_ -notmatch $f } | sc $profile; rm -r -fo "$HOME/$f.ps1"
+   $f = 'syntax-highlighting'; (gc $profile) | ? { $_ -notmatch $f } | Set-Content $profile; Remove-Item -r -fo "$HOME/$f.ps1"
    ```
 
 2. Restart your PowerShell.
