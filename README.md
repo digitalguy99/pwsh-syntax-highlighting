@@ -21,10 +21,12 @@ Execute the following command:
  
 ## Uninstall
 
-Run the following:
-```pwsh
-($f = 'syntax-highlighting'); (gc $profile) | ? { $_ -notmatch $f } | sc $profile; rm -r -fo "$HOME/$f.ps1"
-```
+1. Run the following:
+   ```pwsh
+   ($f = 'syntax-highlighting'); (gc $profile) | ? { $_ -notmatch $f } | sc $profile; rm -r -fo "$HOME/$f.ps1"
+   ```
+
+2. Restart your PowerShell.
 
 ## How to update
 
