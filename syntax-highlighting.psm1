@@ -34,15 +34,16 @@ function global:Invoke-Highlight {
 
 
    foreach ($token in $tokens) {
-       if ($token.TokenServiceKind -eq 'Command' -or $token.Kind -eq 'Identifier') {
+       # Capture strings, identifiers, and generic commands
+       if ($token.Kind -in @('Command', 'Identifier', 'StringLiteral', 'Generic')) {
            $cmdText = $token.Text.Trim()
           
-           # if ([string]::IsNullOrWhiteSpace($cmdText) -or $cmdText -match '^[\(\)\[\]\{\}]$' -or $cmdText -eq "exit") {
-           #     continue
-           # }
+           # Skip empty tokens, operators, or parenthesis parsed as strings
+           if ([string]::IsNullOrWhiteSpace($cmdText) -or $cmdText -match '^[\(\)\[\]\{\};|,]$' -or $cmdText -eq "exit") {
+               continue
+           }
           
            $hasCommand = $true
-
 
            if ($global:commandCache.ContainsKey($cmdText)) {
                if (-not $global:commandCache[$cmdText]) {
@@ -51,6 +52,7 @@ function global:Invoke-Highlight {
                }
            }
            else {
+               # Use Get-Command but specifically target executable/cmdlet/function names
                $exists = $null -ne (Get-Command $cmdText -ErrorAction Ignore)
                $global:commandCache[$cmdText] = $exists
                if (-not $exists) {
